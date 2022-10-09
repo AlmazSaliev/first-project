@@ -1,15 +1,15 @@
-import { Link, useParams } from "react-router-dom";
+import styled from '@emotion/styled'
+import Card from './UI/Card'
 
 const ProjectDetail = () => {
-  const id = useParams();
   return (
-    <div>
-      <p>projectdetail by id {id.id}</p>
-      <Link to="1">about room 1</Link>
-      <Link to="2">about room 2</Link>
-      <Link to="3">about room 3</Link>
-      <Link to="4">about room 4</Link>
-    </div>
-  );
-};
-export default ProjectDetail;
+    <Container>
+      <Card />
+    </Container>
+  )
+}
+export default ProjectDetail
+
+const Container = styled('div')`
+  padding: 120px;
+`
