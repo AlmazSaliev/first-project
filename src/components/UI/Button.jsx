@@ -2,7 +2,7 @@ import React from 'react'
 import ButtonMui from '@mui/material/Button'
 import styled from '@emotion/styled'
 
-function Button({variant, children}) {
+function Button({ variant, children, onClick, props }) {
   const VARIANTS = {
     outlined: {
       backgroundColor: 'white',
@@ -37,7 +37,11 @@ function Button({variant, children}) {
     },
   }
 
-  return <StyledButton styles={VARIANTS[variant]}>{children}</StyledButton>
+  return (
+    <StyledButton styles={VARIANTS[variant]} onClick={onClick} {...props}>
+      {children}
+    </StyledButton>
+  );
 }
 Button.defaultProps = {
   variant: 'outlined',
