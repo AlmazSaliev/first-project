@@ -1,13 +1,10 @@
 import "./App.css";
-import Button from "./components/UI/Button";
+import AllRoute from "./route/AllRoute";
 
 function App() {
   return (
     <div className="App">
-      <h1>hell</h1>
-      <Button />
-      <Button variant='deleted' />
-      <Button variant='contained' />
+      <AllRoute />
     </div>
   );
 }
