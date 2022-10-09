@@ -2,7 +2,7 @@ import React from 'react'
 import ButtonMui from '@mui/material/Button'
 import styled from '@emotion/styled'
 
-function Button({ variant, children, onClick, props }) {
+function Button({ variant, children, onClick, ...props }) {
   const VARIANTS = {
     outlined: {
       backgroundColor: 'white',

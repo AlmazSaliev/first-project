@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-function Input({ type, onChange, value, props }) {
+function Input({ type, onChange, value, ...props }) {
   return (
     <StyledInput type={type} onChange={onChange} value={value} {...props} />
   );
