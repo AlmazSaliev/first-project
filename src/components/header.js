@@ -18,6 +18,7 @@ export default Header
 const HeaderWrapper = styled('div')`
   background: #0b363c;
   position: fixed;
+  top: 0;
   z-index: 9;
   height: 89px;
   width: 100%;
