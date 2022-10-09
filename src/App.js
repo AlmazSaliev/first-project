@@ -1,10 +1,10 @@
 import './App.css'
-import Header from './components/header'
+import AllRoute from './route/AllRoute'
 
 function App() {
   return (
     <div className="App">
-      <Header />
+      <AllRoute />
     </div>
   )
 }
