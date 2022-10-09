@@ -2,7 +2,7 @@ import React from "react";
 import ButtonMui from "@mui/material/Button";
 import styled from "@emotion/styled";
 
-function Button({ variant }) {
+function Button({ variant, children, onClick, props }) {
   const VARIANTS = {
     outlined: {
       border: "1px solid #0b363c",
@@ -16,7 +16,7 @@ function Button({ variant }) {
     contained: {
       border: "1px solid #0b363c",
       backgroundColor: "#0b363c",
-      color: '#fff',
+      color: "#fff",
       " &:hover": {
         color: "#fff",
         backgroundColor: "#0b363c",
@@ -24,18 +24,22 @@ function Button({ variant }) {
       },
     },
     deleted: {
+      border: "1px solid red",
+      backgroundColor: "#fff",
+      color: "red",
+      " &:hover": {
+        color: "#fff",
+        backgroundColor: "red",
         border: "1px solid red",
-        backgroundColor: "#fff",
-        color: 'red',
-        " &:hover": {
-          color: "#fff",
-          backgroundColor: "red",
-          border: "1px solid red",
-        },
-    }
+      },
+    },
   };
 
-  return <StyledButton styles={VARIANTS[variant]}>Outlined</StyledButton>;
+  return (
+    <StyledButton styles={VARIANTS[variant]} onClick={onClick} {...props}>
+      {children}
+    </StyledButton>
+  );
 }
 Button.defaultProps = {
   variant: "outlined",
