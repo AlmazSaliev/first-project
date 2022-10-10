@@ -61,6 +61,7 @@ const StyledForm = styled("form")`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+ 
   input {
     height: 35px;
     padding: 10px;
