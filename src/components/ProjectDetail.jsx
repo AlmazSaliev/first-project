@@ -1,15 +1,30 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import styled from "styled-components";
+import ImagesCard from "./ImagesCard";
 
 const ProjectDetail = () => {
   const id = useParams();
   return (
-    <div>
-      <p>projectdetail by id {id.id}</p>
-      <Link to="1">about room 1</Link>
-      <Link to="2">about room 2</Link>
-      <Link to="3">about room 3</Link>
-      <Link to="4">about room 4</Link>
-    </div>
+    <WrapperContainer>
+      <Container>
+        <p>projectdetail by id {id.id}</p>
+        <ImagesWrapper>
+          <ImagesCard />
+        </ImagesWrapper>
+      </Container>
+    </WrapperContainer>
   );
 };
 export default ProjectDetail;
+const WrapperContainer = styled.div`
+  width: 100%;
+`;
+const Container = styled.div`
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+`;
+const ImagesWrapper = styled.div`
+  width: 90%;
+`;
