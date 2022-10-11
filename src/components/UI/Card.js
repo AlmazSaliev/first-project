@@ -145,9 +145,6 @@ const CardWrap = styled("div")`
     }
   }
 `;
-// const Img = styled('img')`
-//   width: 100%;
-// `
 const Section = styled("div")`
   margin: 0 auto;
   width: 100%;
@@ -159,7 +156,6 @@ const Aside = styled("aside")`
   border-radius: 2px solid;
   box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
   width: 30%;
-  /* height: 8%; */
   padding: 2%;
 `;
 const Redp = styled("p")`
