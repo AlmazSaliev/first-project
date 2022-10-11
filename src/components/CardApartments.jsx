@@ -75,5 +75,6 @@ const WrapperBox = styled.div`
   }
   @media screen and (max-width: 700px) {
     width: 100%;
+    padding-bottom: 8%;
   }
 `;

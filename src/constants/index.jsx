@@ -6,6 +6,7 @@ import House3 from "../assets/images/houseproject3.jpg";
 import HouseLogo3 from "../assets/icons/ankara_logo.png";
 import House4 from "../assets/images/houseproject4.jpg";
 import HouseLogo4 from "../assets/icons/bereke_logo.png";
+import Floor2 from "../assets/images/floor2.jpg";
 
 export const ImgApartments = [
   {
@@ -35,5 +36,85 @@ export const ImgApartments = [
     title: "береке",
     address: "ул.Чар / мкрн Кок-Жар",
     logo: HouseLogo4,
+  },
+];
+
+export const Floor = [
+  {
+    id: 2,
+    image: Floor2,
+    sales: "",
+    booked: "",
+    free: "16",
+  },
+  {
+    id: 3,
+    image: Floor2,
+    sales: "",
+    booked: "",
+    free: "",
+  },
+  {
+    id: 4,
+    image: Floor2,
+    sales: "",
+    booked: "",
+    free: "",
+  },
+  {
+    id: 5,
+    image: Floor2,
+    sales: "",
+    booked: "",
+    free: "",
+  },
+  {
+    id: 6,
+    image: Floor2,
+    sales: "",
+    booked: "",
+    free: "",
+  },
+  {
+    id: 7,
+    image: Floor2,
+    sales: "",
+    booked: "",
+    free: "",
+  },
+  {
+    id: 8,
+    image: Floor2,
+    sales: "",
+    booked: "",
+    free: "",
+  },
+  {
+    id: 9,
+    image: Floor2,
+    sales: "",
+    booked: "",
+    free: "",
+  },
+  {
+    id: 10,
+    image: Floor2,
+    sales: "",
+    booked: "",
+    free: "",
+  },
+  {
+    id: 11,
+    image: Floor2,
+    sales: "",
+    booked: "",
+    free: "",
+  },
+  {
+    id: 12,
+    image: Floor2,
+    sales: "",
+    booked: "",
+    free: "",
   },
 ];
