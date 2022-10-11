@@ -1,75 +1,75 @@
-import styled from "@emotion/styled";
-import React from "react";
-import ImageClicking from "../ImageClicking";
+import styled from '@emotion/styled'
+import React from 'react'
+import ImageClicking from '../ImageClicking'
 
 export const room = [
   {
     id: 1,
-    status: "free",
+    status: 'free',
   },
   {
     id: 2,
-    status: "booking",
+    status: 'booking',
   },
   {
     id: 3,
-    status: "sales",
+    status: 'sales',
   },
   {
     id: 4,
-    status: "free",
+    status: 'free',
   },
   {
     id: 5,
-    status: "booking",
+    status: 'booking',
   },
   {
     id: 6,
-    status: "sales",
+    status: 'sales',
   },
   {
     id: 7,
-    status: "free",
+    status: 'free',
   },
   {
     id: 8,
-    status: "booking",
+    status: 'booking',
   },
   {
     id: 9,
-    status: "sales",
+    status: 'sales',
   },
   {
     id: 10,
-    status: "free",
+    status: 'free',
   },
   {
     id: 11,
-    status: "booking",
+    status: 'booking',
   },
   {
     id: 12,
-    status: "sales",
+    status: 'sales',
   },
   {
     id: 13,
-    status: "free",
+    status: 'free',
   },
   {
     id: 14,
-    status: "booking",
+    status: 'booking',
   },
   {
     id: 15,
-    status: "sales",
+    status: 'sales',
   },
   {
     id: 16,
-    status: "free",
+    status: 'free',
   },
-];
+]
 const Card = (props) => {
-  const { image, sales, booked, free, id } = props;
+  const {image, sales, booked, free, id} = props
 
   return (
     <div>
@@ -122,12 +122,12 @@ const Card = (props) => {
         </Aside>
       </CardWrap>
     </div>
-  );
-};
+  )
+}
 
-export default Card;
+export default Card
 
-const CardWrap = styled("div")`
+const CardWrap = styled('div')`
   width: 100%;
   height: 80%;
   position: relative;
@@ -145,12 +145,12 @@ const CardWrap = styled("div")`
       z-index: 2;
     }
   }
-`;
-const Section = styled("div")`
+`
+const Section = styled('div')`
   margin: 0 auto;
   width: 100%;
-`;
-const Aside = styled("aside")`
+`
+const Aside = styled('aside')`
   position: absolute;
   top: 15%;
   right: 15%;
@@ -158,16 +158,16 @@ const Aside = styled("aside")`
   box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
   width: 30%;
   padding: 2%;
-`;
-const Redp = styled("p")`
+`
+const Redp = styled('p')`
   font-size: 2vw;
   color: red;
-`;
-const Yellowp = styled("p")`
+`
+const Yellowp = styled('p')`
   font-size: 2vw;
   color: orange;
-`;
-const Bluep = styled("p")`
+`
+const Bluep = styled('p')`
   font-size: 2vw;
   color: blue;
-`;
+`

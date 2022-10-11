@@ -1,37 +1,141 @@
-import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { ImgApartments, Rooms } from "../constants";
-import Button from "./UI/Button";
-import Input from "./UI/Input";
+import styled from '@emotion/styled'
+import {useEffect, useState} from 'react'
+import {Link, useLocation} from 'react-router-dom'
+import {ImgApartments, Rooms} from '../constants'
+import Button from './UI/Button'
+import Input from './UI/Input'
 
+const idb =
+  window.indexedDB ||
+  window.mozIndexedDB ||
+  window.webkitIndexedDB ||
+  window.msIndexedDB ||
+  window.shemIndexedDB
+
+const createCollectionsInIndexedDB = () => {
+  if (!idb) {
+    console.log('This browser doesnt support IndexedDB')
+    return
+  }
+  console.log(idb)
+
+  const request = idb.open('houses', 2)
+  request.onerror = (event) => {
+    console.log('error', event)
+  }
+
+  request.onupgradeneeded = (event) => {
+    const db = request.result
+    if (!db.objectStoreNames.contains('data')) {
+      db.createObjectStore('data', {
+        keyPath: 'id',
+      })
+    }
+  }
+  request.onsuccess = () => {
+    console.log('DataBase opened successfully')
+  }
+}
 const ProjectInnerPage = () => {
-  const idproject = useLocation();
-  const id = idproject.pathname.split("/");
-  const title = ImgApartments.find((i) => i.id === +id[2]);
-  const data = Rooms.find((i) => i.id === +id[4]);
-  const [radio, setRadio] = useState("");
+  const idproject = useLocation()
+  const id = idproject.pathname.split('/')
+  const title = ImgApartments.find((i) => i.id === +id[2])
+  const data = Rooms.find((i) => i.id === +id[4])
+  const [radio, setRadio] = useState('')
   const [values, setValues] = useState({
-    buyerName: "",
-    phoneNamber: "",
-    date: "",
-    pay: "",
-  });
+    buyerName: '',
+    phoneNamber: '',
+    date: '',
+    pay: '',
+  })
+  const [allUsersData, setAllUsersData] = useState([])
+  // const [selectedUser, setSelectedUser] = useState({})
+
+  useEffect(() => {
+    createCollectionsInIndexedDB()
+    getAllDataUser()
+  }, [])
+
   const radioOpt = [
-    { value: "sales", id: "1", label: "Продать" },
-    { value: "booking", id: "2", label: "Бронь" },
-  ];
+    {value: 'Продано', id: '1', label: 'Продано'},
+    {value: 'бронирован', id: '2', label: 'Бронь'},
+  ]
 
   const getValuesHandler = (e) => {
-    const value = e.target.value;
-    setValues({ ...values, [e.target.name]: value });
-  };
+    const value = e.target.value
+    setValues({...values, [e.target.name]: value})
+  }
   const radioButtonHandler = (e) => {
-    setRadio(e);
-  };
+    setRadio(e)
+  }
+
+  const getAllDataUser = () => {
+    const dbPromise = idb.open('houses', 2)
+    dbPromise.onsuccess = () => {
+      const db = dbPromise.result
+      const tx = db.transaction('data', 'readonly')
+      const data = tx.objectStore('data')
+      const users = data.getAll()
+      users.onsuccess = (query) => {
+        setAllUsersData(query.srcElement.result)
+      }
+      users.onerror = (query) => {
+        alert('Error occured while loading initial data')
+      }
+      tx.oncomplete = () => {
+        db.close()
+      }
+    }
+  }
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    const dbPromise = idb.open('houses', 2)
+    if (values.buyerName && values.phoneNamber && values.date && values.pay) {
+      dbPromise.onsuccess = () => {
+        const db = dbPromise.result
+        const tx = db.transaction('data', 'readwrite')
+        const data = tx.objectStore('data')
+        const users = data.put({
+          id: allUsersData.length + 1,
+          values: {...values},
+          radio,
+        })
+        users.onsuccess = () => {
+          tx.oncomplete = () => {
+            db.close()
+          }
+          getAllDataUser()
+          alert('User added')
+        }
+        users.onerror = (event) => {
+          console.log(event)
+          alert('Error occured')
+        }
+      }
+    }
+  }
+  const deleteHandler = (user) => {
+    const dbPromise = idb.open('houses', 2)
+    dbPromise.onsuccess = () => {
+      const db = dbPromise.result
+      const tx = db.transaction('data', 'readwrite')
+      const data = tx.objectStore('data')
+      const deleteUsers = data.delete(user?.id)
+      deleteUsers.onsuccess = (query) => {
+        alert('User deleted')
+        getAllDataUser()
+      }
+      deleteUsers.onerror = (query) => {
+        alert('Error occured while loading initial data')
+      }
+      tx.oncomplete = () => {
+        db.close()
+      }
+    }
+  }
   useEffect(() => {
-    window.scroll(0, 0);
-  }, []);
+    window.scroll(0, 0)
+  }, [])
   return (
     <Wrapper>
       <LinkRout>
@@ -46,10 +150,10 @@ const ProjectInnerPage = () => {
       <WrapImage>
         <img width="50%" src={data.image} alt="" />
       </WrapImage>
-      <WrapForm>
+      <WrapForm onSubmit={handleSubmit}>
         <div>
           {radioOpt.map((el) => (
-            <div>
+            <div key={el.id}>
               <input
                 name="simple"
                 type="radio"
@@ -64,6 +168,7 @@ const ProjectInnerPage = () => {
           name="buyerName"
           onChange={getValuesHandler}
           placeholder="Ф. И. О"
+          value={values.buyerName}
         />
         <Input
           name="phoneNamber"
@@ -77,7 +182,9 @@ const ProjectInnerPage = () => {
           placeholder="Дата"
         />
         <Input name="pay" onChange={getValuesHandler} placeholder="Оплата" />
-        <Button variant="contained">Сохранить</Button>
+        <Button type="submit" variant="contained">
+          Сохранить
+        </Button>
       </WrapForm>
       <WrapResult>
         <table>
@@ -88,26 +195,44 @@ const ProjectInnerPage = () => {
               <th>Телефон</th>
               <th>Оплата</th>
               <th>Дата</th>
+              <th>Статус</th>
               <th>Действия</th>
             </tr>
-            <tr>
-              <td>1</td>
-              <td>{values.buyerName}</td>
-              <td>{values.phoneNamber}</td>
-              <td>{values.pay}</td>
-              <td>{values.date}</td>
-              <td>
-                <Button variant="deleted">Удалить</Button>
-              </td>
-            </tr>
+            {allUsersData?.map((el) => (
+              <tr key={el.id}>
+                <td>{el.id}</td>
+                <td>{el.values.buyerName}</td>
+                <td>{el.values.phoneNamber}</td>
+                <td>{el.values.pay}</td>
+                <td>{el.values.date}</td>
+                <td>{el.radio}</td>
+                <td>
+                  <Button
+                    variant="deleted"
+                    onClick={() => {
+                      deleteHandler(el)
+                    }}>
+                    Удалить
+                  </Button>
+                  {/* <Button
+                    variant="outlined"
+                    onClick={(e) => {
+                      setSelectedUser(el)
+                      setValues({...el, [e.target.name]: el.values})
+                    }}>
+                    Редактировать
+                  </Button> */}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </WrapResult>
     </Wrapper>
-  );
-};
-export default ProjectInnerPage;
-const LinkRout = styled("div")`
+  )
+}
+export default ProjectInnerPage
+const LinkRout = styled('div')`
   position: absolute;
   & > a {
     text-decoration: none;
@@ -123,12 +248,11 @@ const LinkRout = styled("div")`
   @media screen and (max-width: 700px) {
     font-size: 2.5vw;
     & > a {
-    border-bottom: 0.2vh solid #002102;
-
+      border-bottom: 0.2vh solid #002102;
     }
   }
-`;
-const Wrapper = styled("div")`
+`
+const Wrapper = styled('div')`
   margin: auto;
   margin-top: 280px;
   display: flex;
@@ -136,9 +260,9 @@ const Wrapper = styled("div")`
   width: 90%;
   @media screen and (max-width: 700px) {
     margin-top: 200px;
-    }
-`;
-const Div = styled("div")`
+  }
+`
+const Div = styled('div')`
   position: absolute;
   top: 160px;
   display: flex;
@@ -163,16 +287,16 @@ const Div = styled("div")`
   @media screen and (max-width: 700px) {
     font-size: 4vw;
   }
-`;
-const WrapImage = styled("div")`
+`
+const WrapImage = styled('div')`
   margin: 35px auto;
   max-width: 400px;
   text-align: center;
   img {
     width: 100%;
   }
-`;
-const WrapForm = styled("form")`
+`
+const WrapForm = styled('form')`
   margin: 0 auto;
   padding: 40px 40px 0 40px;
   border: 1px solid #0b363c;
@@ -201,7 +325,7 @@ const WrapForm = styled("form")`
   > input {
     height: 35px;
     padding: 10px;
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin-top: 10%;
     border: 1px solid #0b363c;
   }
@@ -212,8 +336,8 @@ const WrapForm = styled("form")`
       color: #fff;
     }
   }
-`;
-const WrapResult = styled("div")`
+`
+const WrapResult = styled('div')`
   overflow: auto;
   width: 90%;
   height: 400px;
@@ -237,4 +361,4 @@ const WrapResult = styled("div")`
     font-size: 12px;
     height: 25px;
   }
-`;
+`
