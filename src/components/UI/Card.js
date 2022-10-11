@@ -57,6 +57,7 @@ const Aside = styled('aside')`
   width: 30%;
   height: 16.5%;
   padding: 2%;
+  background-color: rgb(239, 238, 238);
 `
 const Redp = styled('p')`
   font-size: 2vw;
@@ -64,7 +65,7 @@ const Redp = styled('p')`
 `
 const Yellowp = styled('p')`
   font-size: 2vw;
-  color: yellow;
+  color: rgb(249, 163, 24);
 `
 const Bluep = styled('p')`
   font-size: 2vw;
