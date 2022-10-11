@@ -79,6 +79,7 @@ const Card = (props) => {
         </div>
         <Section>
           <ImageClicking
+            id={id}
             images={image}
             idroom1={room[0].id}
             statusroom1={room[0].status}

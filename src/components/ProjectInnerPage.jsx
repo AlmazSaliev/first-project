@@ -1,9 +1,15 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { ImgApartments, Rooms } from "../constants";
 import Button from "./UI/Button";
 import Input from "./UI/Input";
 
 const ProjectInnerPage = () => {
+  const idproject = useLocation();
+  const id = idproject.pathname.split("/");
+  const title = ImgApartments.find((i) => i.id === +id[2]);
+  const data = Rooms.find((i) => i.id === +id[4]);
   const [radio, setRadio] = useState("");
   const [values, setValues] = useState({
     buyerName: "",
@@ -12,8 +18,8 @@ const ProjectInnerPage = () => {
     pay: "",
   });
   const radioOpt = [
-    { value: "SOLD", id: "1", label: "Продано" },
-    { value: "BOOKED", id: "2", label: "Бронь" },
+    { value: "sales", id: "1", label: "Продать" },
+    { value: "booking", id: "2", label: "Бронь" },
   ];
 
   const getValuesHandler = (e) => {
@@ -23,14 +29,22 @@ const ProjectInnerPage = () => {
   const radioButtonHandler = (e) => {
     setRadio(e);
   };
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
   return (
     <Wrapper>
+      <LinkRout>
+        <Link to="/projects">Проекты</Link> / <Link to={-1}>{title.title}</Link>
+      </LinkRout>
+      <Div>
+        <p>{title.title}</p>
+        <p>{id[3]}-й этаж</p>
+        <p>квартира № {id[4]}</p>
+        <span> </span>
+      </Div>
       <WrapImage>
-        <img
-          width="50%"
-          src="http://barakat.kg/media/plan/14_3%D0%BA.%D0%BA%D0%B2.83.17.png"
-          alt=""
-        />
+        <img width="50%" src={data.image} alt="" />
       </WrapImage>
       <WrapForm>
         <div>
@@ -70,7 +84,7 @@ const ProjectInnerPage = () => {
           <tbody>
             <tr>
               <th>№</th>
-              <th>Ф И О</th>
+              <th>Ф. И. О.</th>
               <th>Телефон</th>
               <th>Оплата</th>
               <th>Дата</th>
@@ -82,7 +96,9 @@ const ProjectInnerPage = () => {
               <td>{values.phoneNamber}</td>
               <td>{values.pay}</td>
               <td>{values.date}</td>
-              <td><Button variant='deleted'>Удалить</Button></td>
+              <td>
+                <Button variant="deleted">Удалить</Button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -91,20 +107,69 @@ const ProjectInnerPage = () => {
   );
 };
 export default ProjectInnerPage;
+const LinkRout = styled("div")`
+  position: absolute;
+  & > a {
+    text-decoration: none;
+    color: #002102;
+    border-bottom: 0.4vh solid #002102;
+    text-transform: capitalize;
+  }
+  margin: 0 auto;
+  top: 110px;
+  width: 90%;
+  left: 5vw;
+  font-size: 1.5vw;
+  @media screen and (max-width: 700px) {
+    font-size: 2.5vw;
+    & > a {
+    border-bottom: 0.2vh solid #002102;
 
+    }
+  }
+`;
 const Wrapper = styled("div")`
   margin: auto;
-  margin-top: 150px;
+  margin-top: 280px;
   display: flex;
   flex-wrap: wrap;
   width: 90%;
+  @media screen and (max-width: 700px) {
+    margin-top: 200px;
+    }
+`;
+const Div = styled("div")`
+  position: absolute;
+  top: 160px;
+  display: flex;
+  gap: 20px;
+  width: 90%;
+  color: darkslategray;
+  font-weight: 500;
+  font-size: 2vw;
+  text-transform: capitalize;
+  justify-content: center;
+  & > span {
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background-color: #013301a0;
+    top: 50px;
+    box-shadow: 0px 5px 13px 2px #013301;
+    @media screen and (max-width: 700px) {
+      top: 30px;
+    }
+  }
+  @media screen and (max-width: 700px) {
+    font-size: 4vw;
+  }
 `;
 const WrapImage = styled("div")`
   margin: 35px auto;
-  max-width: 500px;
+  max-width: 400px;
   text-align: center;
   img {
-    margin: auto;
+    width: 100%;
   }
 `;
 const WrapForm = styled("form")`
@@ -120,6 +185,7 @@ const WrapForm = styled("form")`
   > div {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
   > div > div {
     display: flex;
@@ -148,25 +214,26 @@ const WrapForm = styled("form")`
   }
 `;
 const WrapResult = styled("div")`
- overflow: auto;
+  overflow: auto;
   width: 90%;
   height: 400px;
   margin: 130px auto 0 auto;
   table {
     border-collapse: collapse;
-    width: 1200px;
-    @media screen and (max-width: 700px){
+    width: 100%;
+    @media screen and (max-width: 700px) {
       width: 800px;
     }
-    tbody tr th, td {
+    tbody tr th,
+    td {
       padding: 10px;
       border: 1px solid #0b363c;
     }
   }
-  th{
+  th {
     text-align: left;
   }
-  tr> td> button{
+  tr > td > button {
     font-size: 12px;
     height: 25px;
   }

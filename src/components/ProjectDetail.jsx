@@ -1,7 +1,7 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "@emotion/styled";
 import Card from "./UI/Card";
-import { Floor } from "../constants";
+import { Floor, ImgApartments } from "../constants";
 import { useState } from "react";
 import LoadingSpinner from "./UI/LoadingSpinner";
 
@@ -12,10 +12,15 @@ const ProjectDetail = () => {
     setshow(true);
   }, 1700);
   console.log(id, show);
+  const title = ImgApartments.find((i) => i.id === +id.id);
+  console.log(title, "title");
   return (
     <WrapperContainer>
+      <LinkRout>
+        <Link to="/projects">Проекты </Link>
+      </LinkRout>
       <div>
-        <h1>Райан</h1>
+        <h1>{title.title}</h1>
         <p>Статистика</p>
         <span> </span>
         <p>
@@ -43,17 +48,48 @@ const ProjectDetail = () => {
   );
 };
 export default ProjectDetail;
+const LinkRout = styled("div")`
+  position: absolute;
+  & > a {
+    text-decoration: none;
+    color: #002102;
+    border-bottom: 0.4vh solid #002102;
+  }
+  margin: 0 auto;
+  top: 110px;
+  width: 90%;
+  left: 5vw;
+  font-size: 1.5vw;
+  @media screen and (max-width: 700px) {
+    font-size: 2.5vw;
+    & > a {
+      border-bottom: 0.2vh solid #002102;
+    }
+  }
+`;
 const WrapperContainer = styled("div")`
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 160px;
   width: 100%;
-  & > :nth-child(1) {
+  @media screen and (max-width: 700px) {
+    margin-top: 140px;
+  }
+  & > :nth-child(2) {
     position: relative;
     width: 90%;
     margin: 0 auto;
     text-align: center;
-    font-size: 2vw;
+    font-size: 1.5vw;
     color: #0b363c;
+    & > h1 {
+      text-transform: capitalize;
+    }
+    @media screen and (max-width: 700px) {
+      font-size: 2vw;
+      & > p {
+        font-size: 2.3vw;
+      }
+    }
     & > :nth-child(2) {
       font-weight: bold;
       border-bottom: 0.4vw solid darkgreen;
@@ -65,7 +101,7 @@ const WrapperContainer = styled("div")`
       height: 2%;
       width: 100%;
       left: 0;
-      top: 62%;
+      top: 60%;
     }
     & > p > :nth-child(1) {
       color: red;
