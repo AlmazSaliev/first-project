@@ -1,8 +1,12 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 import { ImgApartments } from "../constants";
 import CardApartments from "./CardApartments";
 
 const Projects = () => {
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
   return (
     <Box>
       <p>Проекты</p>
